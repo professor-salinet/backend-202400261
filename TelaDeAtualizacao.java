@@ -9,9 +9,11 @@ public class TelaDeAtualizacao extends JFrame {
 
     public static JLabel lblNome;
     public static JTextField txtNome;
+    public static String txtNomeCarregado;
 
     public static JLabel lblEmail;
     public static JTextField txtEmail;
+    public static String txtEmailCarregado;
 
     public static JLabel lblSenha;
     public static JPasswordField txtSenha;
@@ -50,6 +52,8 @@ public class TelaDeAtualizacao extends JFrame {
         txtEmail = new JTextField(10);
         addComponent(txtEmail, 2, 1, 1, 1);
 
+        atualizarCampos(String.valueOf(cbxId.getSelectedItem()));
+
         lblSenha = new JLabel("Senha:", SwingConstants.RIGHT);
         addComponent(lblSenha, 3, 0, 1, 1);
 
@@ -57,6 +61,7 @@ public class TelaDeAtualizacao extends JFrame {
         addComponent(txtSenha, 3, 1, 1, 1);
 
         btnAtualizar = new JButton("Atualizar");
+        btnAtualizar.setEnabled(false);
         addComponent(btnAtualizar, 4, 0, 1, 1);
 
         btnCancelar = new JButton("Cancelar");
@@ -64,6 +69,94 @@ public class TelaDeAtualizacao extends JFrame {
 
         lblNotificacoes = new JLabel("Notificações", SwingConstants.CENTER);
         addComponent(lblNotificacoes, 5, 0, 2, 1);
+
+        cbxId.addItemListener(
+            new ItemListener() {
+                @Override
+                public void itemStateChanged(ItemEvent event) {
+                    if (event.getStateChange() == ItemEvent.SELECTED) {
+                        atualizarCampos(String.valueOf(cbxId.getSelectedItem()));
+                    }
+                }
+            }
+        );
+
+        // cbxId.addActionListener(
+        //     new ActionListener() {
+        //         @Override
+        //         public void actionPerformed(ActionEvent event) {
+        //             if (!txtNome.getText().trim().equals(txtNomeCarregado.trim()) && JOptionPane.showConfirmDialog(null, "Nome modificado! Deseja alternar para outro id?") == JOptionPane.CANCEL_OPTION) {
+        //                 return;
+        //             }
+        //             System.out.println("aqui ok");
+        //         }
+        //     }
+        // );
+
+        btnAtualizar.addActionListener(
+            new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent event) {
+                    try {
+                        Connection conexao = MySQLConnector.conectar();
+                        String atualizarSenha = "";
+                        if (String.valueOf(txtSenha.getPassword()).trim().length() > 0) {
+                            atualizarSenha = ", `senha` = '" + String.valueOf(txtSenha.getPassword()).trim() + "'";
+                        }
+                        String strSqlAtualizarId = "update `db_senac`.`tbl_senac` set `nome` = '" + txtNome.getText().trim() + "', `email` = '" + txtEmail.getText().trim() + "'" + atualizarSenha + " where `id` = " + String.valueOf(cbxId.getSelectedItem()) + ";";
+                        Statement stmSqlAtualizarId = conexao.createStatement();
+                        stmSqlAtualizarId.addBatch(strSqlAtualizarId);
+                        stmSqlAtualizarId.executeBatch();
+                        txtNomeCarregado = txtNome.getText().trim();
+                        txtEmailCarregado = txtEmail.getText().trim();
+                        btnAtualizar.setEnabled(false);
+                        notificarUsuario("O id " + String.valueOf(cbxId.getSelectedItem()) + " foi atualizado com sucesso.");
+                    } catch (Exception e) {
+                        notificarUsuario("Ops! Problema no servidor, tente novamente mais tarde.");
+                        System.err.println("Erro: " + e);
+                    }
+                }
+            }
+        );
+
+        txtNome.addKeyListener(
+            new KeyAdapter() {
+                @Override
+                public void keyReleased(KeyEvent event) {
+                    if (txtNomeCarregado.trim().equals(txtNome.getText().trim())) {
+                        btnAtualizar.setEnabled(false);
+                    } else {
+                        btnAtualizar.setEnabled(true);
+                    }
+                }
+            }
+        );
+
+        txtEmail.addKeyListener(
+            new KeyAdapter() {
+                @Override
+                public void keyReleased(KeyEvent event) {
+                    if (txtEmailCarregado.trim().equals(txtEmail.getText().trim())) {
+                        btnAtualizar.setEnabled(false);
+                    } else {
+                        btnAtualizar.setEnabled(true);
+                    }
+                }
+            }
+        );
+
+        txtSenha.addKeyListener(
+            new KeyAdapter() {
+                @Override
+                public void keyReleased(KeyEvent event) {
+                    if (String.valueOf(txtSenha.getPassword()).trim().length() == 0) {
+                        btnAtualizar.setEnabled(false);
+                    } else {
+                        btnAtualizar.setEnabled(true);
+                    }
+                }
+            }
+        );
 
         setSize(206,200);
         setVisible(true);
@@ -107,6 +200,27 @@ public class TelaDeAtualizacao extends JFrame {
 
     public static String setHtmlFormat(String str) {
         return "<html><body>" + str + "</body></html>";
+    }
+
+    public static void atualizarCampos(String strId) {
+        try {
+            Connection conexao = MySQLConnector.conectar();
+            String strSqlAtualizarCampos = "select * from `db_senac`.`tbl_senac` where id = " + strId + ";";
+            Statement stmSqlAtualizarCampos = conexao.createStatement();
+            ResultSet rstSqlAtualizarCampos = stmSqlAtualizarCampos.executeQuery(strSqlAtualizarCampos);
+            if (rstSqlAtualizarCampos.next()) {
+                txtNome.setText(rstSqlAtualizarCampos.getString("nome"));
+                txtNomeCarregado = txtNome.getText();
+                txtEmail.setText(rstSqlAtualizarCampos.getString("email"));
+                txtEmailCarregado = txtEmail.getText();
+                // txtSenha.setText("");
+            } else {
+                notificarUsuario("Id não encontrado.");
+            }
+        } catch (Exception e) {
+            notificarUsuario("Ops! Problema no servidor. Tente novamente mais tarde.");
+            System.err.println("Erro: " + e);
+        }
     }
 
     public static TelaDeAtualizacao appTelaDeAtualizacao;
