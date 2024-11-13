@@ -22,9 +22,9 @@ public class TelaDeAtualizacaoController extends TelaDeAtualizacaoView {
     }
 
     public static void atualizarController() {
-        if(TelaDeAtualizacaoModel.atualizarModel(String.valueOf(cbxId.getSelectedItem()), txtNome.getText().trim(), txtEmail.getText().trim(), String.valueOf(txtSenha.getPassword()).trim())) {
-            TelaDeAtualizacaoController.txtNomeCarregado = txtNome.getText().trim();
-            TelaDeAtualizacaoController.txtEmailCarregado = txtEmail.getText().trim();
+        if (TelaDeAtualizacaoModel.atualizarModel(String.valueOf(cbxId.getSelectedItem()), txtNome.getText().trim(), txtEmail.getText().trim(), String.valueOf(txtSenha.getPassword()).trim())) {
+            txtNomeCarregado = txtNome.getText().trim();
+            txtEmailCarregado = txtEmail.getText().trim();
             btnAtualizar.setEnabled(false);
         }
     }

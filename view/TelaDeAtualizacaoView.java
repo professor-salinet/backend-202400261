@@ -3,7 +3,6 @@ import controller.*;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.sql.*;
 import javax.swing.*;
 
 public class TelaDeAtualizacaoView extends JFrame {
@@ -40,7 +39,7 @@ public class TelaDeAtualizacaoView extends JFrame {
         addComponent(lblId, 0, 0, 1, 1);
 
         cbxId = new JComboBox<String>();
-        popularCbxId();
+        TelaDeAtualizacaoController.popularCbxIdController();
         addComponent(cbxId, 0, 1, 1, 1);
 
         lblNome = new JLabel("Nome:", SwingConstants.RIGHT);
@@ -55,7 +54,7 @@ public class TelaDeAtualizacaoView extends JFrame {
         txtEmail = new JTextField(10);
         addComponent(txtEmail, 2, 1, 1, 1);
 
-        atualizarCampos(String.valueOf(cbxId.getSelectedItem()));
+        TelaDeAtualizacaoController.atualizarCamposController();
 
         lblSenha = new JLabel("Senha:", SwingConstants.RIGHT);
         addComponent(lblSenha, 3, 0, 1, 1);
@@ -78,7 +77,7 @@ public class TelaDeAtualizacaoView extends JFrame {
                 @Override
                 public void itemStateChanged(ItemEvent event) {
                     if (event.getStateChange() == ItemEvent.SELECTED) {
-                        atualizarCampos(String.valueOf(cbxId.getSelectedItem()));
+                        TelaDeAtualizacaoController.atualizarCamposController();
                     }
                 }
             }
@@ -164,10 +163,6 @@ public class TelaDeAtualizacaoView extends JFrame {
         add(component);
     }
 
-    public static void popularCbxId() {
-        TelaDeAtualizacaoController.popularCbxIdController();
-    }
-
     public static void notificarUsuario(String str) {
         lblNotificacoes.setText(setHtmlFormat(str));
     }
@@ -176,23 +171,9 @@ public class TelaDeAtualizacaoView extends JFrame {
         return "<html><body>" + str + "</body></html>";
     }
 
-    public static void atualizarCampos(String strId) {
-        TelaDeAtualizacaoController.atualizarCamposController();
-    }
-
     public static TelaDeAtualizacaoView appTelaDeAtualizacaoView;
     public static void main(String[] args) {
         appTelaDeAtualizacaoView = new TelaDeAtualizacaoView();
         appTelaDeAtualizacaoView.setDefaultCloseOperation(EXIT_ON_CLOSE);
-
-        // appTelaDeAtualizacaoView.getRootPane().addComponentListener(
-        //     new ComponentAdapter() {
-        //         public void componentResized(ComponentEvent e) {
-        //             int larguraTela = appTelaDeAtualizacaoView.getWidth();
-        //             int alturaTela = appTelaDeAtualizacaoView.getHeight();
-        //             notificarUsuario(String.format("Largura: %s, Altura: %s", larguraTela, alturaTela));
-        //         }
-        //     }
-        // );
     }
 }

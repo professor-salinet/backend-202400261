@@ -54,7 +54,7 @@ public class TelaDeAtualizacaoModel {
             if (senha.length() > 0) {
                 atualizarSenha = ", `senha` = '" + senha + "'";
             }
-            String strSqlAtualizarId = "update `db_senac`.`tbl_senac` set `nome` = '" + nome + "', `email` = '" + email + "'" + atualizarSenha + " where `id` = " + String.valueOf(id) + ";";
+            String strSqlAtualizarId = "update `db_senac`.`tbl_senac` set `nome` = '" + nome + "', `email` = '" + email + "'" + atualizarSenha + " where `id` = " + id + ";";
             Statement stmSqlAtualizarId = conexao.createStatement();
             stmSqlAtualizarId.addBatch(strSqlAtualizarId);
             stmSqlAtualizarId.executeBatch();
