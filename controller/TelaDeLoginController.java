@@ -10,4 +10,10 @@ public class TelaDeLoginController extends TelaDeLoginView {
         ArrayList<String> resultados = new ArrayList<String>(TelaDeLoginModel.logarModel(txtLogin.getText(), String.valueOf(txtSenha.getPassword())));
         resultados.size();
     }
+
+    public static void abrirTelaDeMenu() {
+        TelaDeMenuView.appTelaDeMenuView = new TelaDeMenuView();
+        TelaDeMenuView.appTelaDeMenuView.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        TelaDeLoginView.appTelaDeLoginView.dispose();
+    }
 }

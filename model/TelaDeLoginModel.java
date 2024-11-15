@@ -17,6 +17,7 @@ public class TelaDeLoginModel {
             ResultSet rstSqlLogin = stmSqlLogin.executeQuery(strSqlLogin);
             if (rstSqlLogin.next()) {
                 TelaDeLoginController.notificarUsuario("Login " + rstSqlLogin.getString("email") + " realizado com sucesso.");
+                TelaDeLoginController.abrirTelaDeMenu();
             } else {
                 TelaDeLoginController.notificarUsuario("Não foi possível encontrar o login e/ou senha digitados. Por favor, verifique e tente novamente.");
             }
