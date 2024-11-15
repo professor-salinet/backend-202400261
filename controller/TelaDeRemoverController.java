@@ -2,10 +2,6 @@ package controller;
 import view.*;
 import model.*;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-
 public class TelaDeRemoverController extends TelaDeRemoverView {
     public static void removerController() {
         TelaDeRemoverModel.removerModel(String.valueOf(cbxId.getSelectedItem()));

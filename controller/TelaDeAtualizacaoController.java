@@ -3,9 +3,6 @@ import view.*;
 import model.*;
 
 import java.util.*;
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
 
 public class TelaDeAtualizacaoController extends TelaDeAtualizacaoView {
     public static void popularCbxIdController() {

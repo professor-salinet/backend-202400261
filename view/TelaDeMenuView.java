@@ -1,5 +1,7 @@
 package view;
-import controller.*;
+/**
+ * import controller.*;
+ */
 
 import java.awt.*;
 import java.awt.event.*;
@@ -41,7 +43,16 @@ public class TelaDeMenuView extends JFrame {
             new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent event) {
-                    JOptionPane.showMessageDialog(null,"Você clicou no menu: " + event.getActionCommand());
+                    TelaDeCadastroView.appTelaDeCadastroView = new TelaDeCadastroView();
+                    TelaDeCadastroView.appTelaDeCadastroView.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+                    appTelaDeMenuView.setVisible(false);
+                    TelaDeCadastroView.appTelaDeCadastroView.addWindowListener(
+                        new WindowAdapter() {
+                            public void windowClosing(WindowEvent e) {
+                                appTelaDeMenuView.setVisible(true);
+                            }
+                        }
+                    );
                 }
             }
         );
@@ -50,7 +61,16 @@ public class TelaDeMenuView extends JFrame {
             new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent event) {
-                    JOptionPane.showMessageDialog(null,"Você clicou no menu: " + event.getActionCommand());
+                    TelaDePesquisaView.appTelaDePesquisaView = new TelaDePesquisaView();
+                    TelaDePesquisaView.appTelaDePesquisaView.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+                    appTelaDeMenuView.setVisible(false);
+                    TelaDePesquisaView.appTelaDePesquisaView.addWindowListener(
+                        new WindowAdapter() {
+                            public void windowClosing(WindowEvent e) {
+                                appTelaDeMenuView.setVisible(true);
+                            }
+                        }
+                    );
                 }
             }
         );
@@ -59,7 +79,16 @@ public class TelaDeMenuView extends JFrame {
             new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent event) {
-                    JOptionPane.showMessageDialog(null,"Você clicou no menu: " + event.getActionCommand());
+                    TelaDeAtualizacaoView.appTelaDeAtualizacaoView = new TelaDeAtualizacaoView();
+                    TelaDeAtualizacaoView.appTelaDeAtualizacaoView.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+                    appTelaDeMenuView.setVisible(false);
+                    TelaDeAtualizacaoView.appTelaDeAtualizacaoView.addWindowListener(
+                        new WindowAdapter() {
+                            public void windowClosing(WindowEvent e) {
+                                appTelaDeMenuView.setVisible(true);
+                            }
+                        }
+                    );
                 }
             }
         );
@@ -68,17 +97,27 @@ public class TelaDeMenuView extends JFrame {
             new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent event) {
-                    JOptionPane.showMessageDialog(null,"Você clicou no menu: " + event.getActionCommand());
+                    TelaDeRemoverView.appTelaDeRemoverView = new TelaDeRemoverView();
+                    TelaDeRemoverView.appTelaDeRemoverView.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+                    appTelaDeMenuView.setVisible(false);
+                    TelaDeRemoverView.appTelaDeRemoverView.addWindowListener(
+                        new WindowAdapter() {
+                            public void windowClosing(WindowEvent e) {
+                                appTelaDeMenuView.setVisible(true);
+                            }
+                        }
+                    );
                 }
             }
         );
+
+        setSize(300,300);
+        setVisible(true);
     }
 
     public static TelaDeMenuView appTelaDeMenuView;
     public static void main(String[] args) {
         appTelaDeMenuView = new TelaDeMenuView();
         appTelaDeMenuView.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        appTelaDeMenuView.setSize(200,200);
-        appTelaDeMenuView.setVisible(true);
     }
 }

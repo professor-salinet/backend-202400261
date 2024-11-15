@@ -1,9 +1,6 @@
 package model;
 import controller.*;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
 import java.sql.*;
 
 public class TelaDePesquisaModel {
@@ -23,6 +20,7 @@ public class TelaDePesquisaModel {
     public static void vaParaPrimeiroRegistroModel() {
         try {
             String strSqlInicializacao = "select * from `db_senac`.`tbl_senac` " + TelaDePesquisaController.clausulasDePesquisaComWhere + " order by `id` asc;";
+            System.out.println(strSqlInicializacao);
             Connection conexao = MySQLConnector.conectar();
             Statement stmSqlInicializacao = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ResultSet rstSqlInicializacao = stmSqlInicializacao.executeQuery(strSqlInicializacao);

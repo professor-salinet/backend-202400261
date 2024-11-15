@@ -2,15 +2,10 @@ package controller;
 import view.*;
 import model.*;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-import java.util.*;
-
 public class TelaDePesquisaController extends TelaDePesquisaView {
-    public static String registroDePesquisa;
-    public static String clausulasDePesquisaComWhere;
-    public static String clausulasDePesquisaSemWhere;
+    public static String registroDePesquisa = "";
+    public static String clausulasDePesquisaComWhere = "";
+    public static String clausulasDePesquisaSemWhere = "";
 
     public static void vaParaPrimeiroRegistro() {
         TelaDePesquisaModel.vaParaPrimeiroRegistroModel();
