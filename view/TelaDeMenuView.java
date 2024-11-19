@@ -15,6 +15,7 @@ public class TelaDeMenuView extends JFrame {
     private final JMenuItem pesquisarItem;
     private final JMenuItem atualizarItem;
     private final JMenuItem removerItem;
+    private final JMenuItem sairItem;
 
     public TelaDeMenuView() {
         super("Tela de Menu");
@@ -27,13 +28,16 @@ public class TelaDeMenuView extends JFrame {
         pesquisarItem = new JMenuItem("Pesquisar");
         atualizarItem = new JMenuItem("Atualizar");
         removerItem = new JMenuItem("Remover");
+        sairItem = new JMenuItem("Sair");
 
         cadastroMenu.add(novoItem);
         cadastroMenu.add(pesquisarItem);
         cadastroMenu.add(atualizarItem);
         cadastroMenu.add(removerItem);
+        cadastroMenu.add(sairItem);
 
         menuBar.add(cadastroMenu);
+
 
         setJMenuBar(menuBar);
 
@@ -107,6 +111,18 @@ public class TelaDeMenuView extends JFrame {
                             }
                         }
                     );
+                }
+            }
+        );
+
+        sairItem.addActionListener(
+            new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent event) {
+                    System.out.println("Aqui ok");
+                    if (JOptionPane.showConfirmDialog(null, "Deseja mesmo sair do sistema?") == 0) {
+                        System.exit(0);
+                    }
                 }
             }
         );
