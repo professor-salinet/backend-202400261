@@ -143,6 +143,16 @@ public class TelaDeAtualizacaoView extends JFrame {
             }
         );
 
+        btnCancelar.addActionListener(
+            new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent event) {
+                    TelaDeMenuView.appTelaDeMenuView.setVisible(true);
+                    dispose();
+                }
+            }
+        );
+
         setSize(206,200);
         setVisible(true);
     }

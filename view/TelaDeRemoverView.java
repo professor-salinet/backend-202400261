@@ -94,9 +94,8 @@ public class TelaDeRemoverView extends JFrame {
             new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent event) {
-                    if (JOptionPane.showConfirmDialog(null, "Deseja cancelar e sair da Tela de Remover") == 0) {
-                        System.exit(1);
-                    }
+                    TelaDeMenuView.appTelaDeMenuView.setVisible(true);
+                    dispose();
                 }
             }
         );
