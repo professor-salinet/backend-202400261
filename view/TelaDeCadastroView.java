@@ -88,7 +88,8 @@ public class TelaDeCadastroView extends JFrame {
             new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent event) {
-                    System.exit(0);
+                    TelaDeMenuView.appTelaDeMenuView.setVisible(true);
+                    dispose();
                 }
             }
         );
