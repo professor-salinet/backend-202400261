@@ -16,6 +16,7 @@ public class DespertadorVisual extends JFrame {
     public static String[] minutos = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59"};
 
     public static JButton btnDefinirAlarme;
+    public static JButton btnPararAlarme;
     public static boolean alarmeDefinido = false;
 
     public static int horaAtual;
@@ -68,7 +69,11 @@ public class DespertadorVisual extends JFrame {
         addComponent(cbxMinutoDespertar, 0, 6, 2, 1);
 
         btnDefinirAlarme = new JButton("Definir Alarme");
-        addComponent(btnDefinirAlarme, 1, 0, 8, 1);
+        addComponent(btnDefinirAlarme, 1, 0, 4, 1);
+
+        btnPararAlarme = new JButton("Parar Alarme");
+        btnPararAlarme.setEnabled(false);
+        addComponent(btnPararAlarme, 1, 4, 4, 1);
 
         lblHorarioAtual = new JLabel("", SwingConstants.CENTER);
         addComponent(lblHorarioAtual, 2, 0, 8, 1);
@@ -121,7 +126,19 @@ public class DespertadorVisual extends JFrame {
                     horaDespertar = Integer.valueOf(String.valueOf(cbxHoraDespertar.getSelectedItem()));
                     minutoDespertar = Integer.valueOf(String.valueOf(cbxMinutoDespertar.getSelectedItem()));
                     alarmeDefinido = true;
+                    btnPararAlarme.setEnabled(true);
                     notificarUsuario("Alarme definido para: " + strHoraDespertar + "h : " + strMinutoDespertar + "m");
+                }
+            }
+        );
+
+        btnPararAlarme.addActionListener(
+            new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent event) {
+                    alarmeDefinido = false;
+                    System.out.println("aqui ok");
+                    btnPararAlarme.setEnabled(false);
                 }
             }
         );
@@ -259,46 +276,58 @@ public class DespertadorVisual extends JFrame {
     public static synchronized void tocarSom(boolean volumeCrescente) {
         new Thread(new Runnable() {
             public void run() {
-                try {
-                    Clip clip = AudioSystem.getClip();
-                    AudioInputStream inputStream = AudioSystem.getAudioInputStream(Despertador.class.getResourceAsStream("./see-you-later-203103.wav"));
-                    clip.open(inputStream);
-                    clip.start();
-
-                    if (volumeCrescente == true) {
-                        FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-                        float volumeMinimo = -30.0f;
-                        float volumeMaximo = 0.0f;
-                        float volumeAumentar = 6.0f;
-                        gainControl.setValue(volumeMinimo); // Reduce volume by 10 decibels.
-                        boolean aumentarVolume = true;
-
-                        long clipTime;
-                        while (aumentarVolume == true) {
-                            if (gainControl.getValue() >= volumeMinimo && gainControl.getValue() <= volumeMaximo) {
-                                clipTime = clip.getMicrosecondPosition();
-                                clip.stop();
-                                gainControl.setValue(gainControl.getValue() + volumeAumentar);
-                                clip.setMicrosecondPosition(clipTime);
-                                clip.start();
-                                try {
-                                    Thread.sleep(1000);
-                                } catch (Exception e) {
-                                    System.err.println("Erro: " + e);
-                                }
-                                // System.out.println("clip.getMicrosecondPosition(): " + clip.getMicrosecondPosition());
-                            } else {
-                                aumentarVolume = false;
-                            }
-                            System.out.println("gainControl.getValue(): " + gainControl.getValue());
+                    try {
+                        Clip clip = AudioSystem.getClip();
+                        AudioInputStream inputStream = AudioSystem.getAudioInputStream(Despertador.class.getResourceAsStream("./see-you-later-203103.wav"));
+                        clip.open(inputStream);
+                        if (alarmeDefinido == true) {
+                            clip.start();
+                        } else {
+                            clip.stop();
                         }
-                    } else {
-                        clip.stop();
-                        clip.start();
+
+                        if (volumeCrescente == true) {
+                            FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+                            float volumeMinimo = -30.0f;
+                            float volumeMaximo = 0.0f;
+                            float volumeAumentar = 6.0f;
+                            gainControl.setValue(volumeMinimo); // Reduce volume by 10 decibels.
+                            boolean aumentarVolume = true;
+
+                            long clipTime;
+                            while (aumentarVolume == true) {
+                                if (gainControl.getValue() >= volumeMinimo && gainControl.getValue() <= volumeMaximo) {
+                                    clipTime = clip.getMicrosecondPosition();
+                                    clip.stop();
+                                    gainControl.setValue(gainControl.getValue() + volumeAumentar);
+                                    clip.setMicrosecondPosition(clipTime);
+                                    if (alarmeDefinido == true) {
+                                        clip.start();
+                                    } else {
+                                        clip.stop();
+                                    }
+                                    try {
+                                        Thread.sleep(1000);
+                                    } catch (Exception e) {
+                                        System.err.println("Erro: " + e);
+                                    }
+                                    // System.out.println("clip.getMicrosecondPosition(): " + clip.getMicrosecondPosition());
+                                } else {
+                                    aumentarVolume = false;
+                                }
+                                System.out.println("gainControl.getValue(): " + gainControl.getValue());
+                            }
+                        } else {
+                            clip.stop();
+                            if (alarmeDefinido == true) {
+                                clip.start();
+                            } else {
+                                clip.stop();
+                            }
+                        }
+                    } catch (Exception e) {
+                        System.err.println(e.getMessage());
                     }
-                } catch (Exception e) {
-                    System.err.println(e.getMessage());
-                }
             }
         }).start();
     }
@@ -306,7 +335,7 @@ public class DespertadorVisual extends JFrame {
     public static DespertadorVisual appDespertadorVisual;
     public static void main(String[] args) {
         appDespertadorVisual = new DespertadorVisual();
-        verificarLarguraEAltura();
+        // verificarLarguraEAltura();
         while (true) {
             definirHorarioAtual();
             lblHorarioAtual.setText("Agora são: " + horaAtual + "h : " + minutoAtual + "m : " + segundoAtual + "s");
