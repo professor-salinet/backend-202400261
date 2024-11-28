@@ -45,6 +45,10 @@ public class DespertadorVisual extends JFrame {
 
     public static JLabel lblNotificacoes;
 
+    public static Clip clip;
+    public static AudioInputStream inputStream;
+    public static boolean audioIniciado = false;
+
     public static GridBagLayout gbLayout;
     public static GridBagConstraints gbConstraints;
 
@@ -60,6 +64,7 @@ public class DespertadorVisual extends JFrame {
         // txtHoraDespertar = new JTextField(10);
         cbxHoraDespertar = new JComboBox<String>(horas);
         addComponent(cbxHoraDespertar, 0, 3, 2, 1);
+        // cbxHoraDespertar.setSelectedIndex(horaAtual);
 
         lblSeparadorDoisPontos = new JLabel(strDoisPontos);
         addComponent(lblSeparadorDoisPontos, 0, 5, 1, 1);
@@ -137,8 +142,12 @@ public class DespertadorVisual extends JFrame {
                 @Override
                 public void actionPerformed(ActionEvent event) {
                     alarmeDefinido = false;
-                    System.out.println("aqui ok");
                     btnPararAlarme.setEnabled(false);
+                    try {
+                        clip.stop();
+                    } catch (Exception e) {
+                        System.err.println("Erro: " + e);
+                    }
                 }
             }
         );
@@ -261,7 +270,7 @@ public class DespertadorVisual extends JFrame {
 
     public static void tocarAlarme() {
         if (horaAtual == horaDespertar && minutoAtual == minutoDespertar && alarmeDefinido == true) {
-            tocarSom(chkAtivarSoneca.isSelected());
+            tocarSom();
             notificarUsuario("O despertador: " + txtMensagemDespertador.getText() + " está ativo.");
             if (chkAtivarSoneca.isSelected()) {
                 if (JOptionPane.showConfirmDialog(null, "Deseja adiar o alarme?") == 0) {
@@ -273,61 +282,35 @@ public class DespertadorVisual extends JFrame {
         }
     }
 
-    public static synchronized void tocarSom(boolean volumeCrescente) {
+    public static synchronized void tocarSom() {
         new Thread(new Runnable() {
             public void run() {
-                    try {
-                        Clip clip = AudioSystem.getClip();
-                        AudioInputStream inputStream = AudioSystem.getAudioInputStream(Despertador.class.getResourceAsStream("./see-you-later-203103.wav"));
+                try {
+                    if (audioIniciado == false) {
+                        clip = AudioSystem.getClip();
+                        inputStream = AudioSystem.getAudioInputStream(Despertador.class.getResourceAsStream("./see-you-later-203103.wav"));
                         clip.open(inputStream);
-                        if (alarmeDefinido == true) {
-                            clip.start();
-                        } else {
-                            clip.stop();
-                        }
-
-                        if (volumeCrescente == true) {
-                            FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-                            float volumeMinimo = -30.0f;
-                            float volumeMaximo = 0.0f;
-                            float volumeAumentar = 6.0f;
-                            gainControl.setValue(volumeMinimo); // Reduce volume by 10 decibels.
-                            boolean aumentarVolume = true;
-
-                            long clipTime;
-                            while (aumentarVolume == true) {
-                                if (gainControl.getValue() >= volumeMinimo && gainControl.getValue() <= volumeMaximo) {
-                                    clipTime = clip.getMicrosecondPosition();
-                                    clip.stop();
-                                    gainControl.setValue(gainControl.getValue() + volumeAumentar);
-                                    clip.setMicrosecondPosition(clipTime);
-                                    if (alarmeDefinido == true) {
-                                        clip.start();
-                                    } else {
-                                        clip.stop();
-                                    }
-                                    try {
-                                        Thread.sleep(1000);
-                                    } catch (Exception e) {
-                                        System.err.println("Erro: " + e);
-                                    }
-                                    // System.out.println("clip.getMicrosecondPosition(): " + clip.getMicrosecondPosition());
-                                } else {
-                                    aumentarVolume = false;
-                                }
-                                System.out.println("gainControl.getValue(): " + gainControl.getValue());
-                            }
-                        } else {
-                            clip.stop();
-                            if (alarmeDefinido == true) {
-                                clip.start();
-                            } else {
-                                clip.stop();
-                            }
-                        }
-                    } catch (Exception e) {
-                        System.err.println(e.getMessage());
+                        clip.start();
                     }
+
+                    if (chkVolumeCrescente.isSelected()) {
+                        FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+                        float volumeMinimo = -30.0f;
+                        float volumeMaximo = 0.0f;
+                        float volumeAumentar = 6.0f;
+
+                        if (audioIniciado == false) {
+                            gainControl.setValue(volumeMinimo); // Reduce volume by 10 decibels.
+                        }
+
+                        if (gainControl.getValue() >= volumeMinimo && gainControl.getValue() <= volumeMaximo) {
+                            gainControl.setValue(gainControl.getValue() + volumeAumentar);
+                        }
+                    }
+                    audioIniciado = true;
+                } catch (Exception e) {
+                    System.err.println(e.getMessage());
+                }
             }
         }).start();
     }
@@ -340,6 +323,7 @@ public class DespertadorVisual extends JFrame {
             definirHorarioAtual();
             lblHorarioAtual.setText("Agora são: " + horaAtual + "h : " + minutoAtual + "m : " + segundoAtual + "s");
             tempoRestante();
+            // System.out.println("alarmeDefinido: " + alarmeDefinido);
             tocarAlarme();
             dormir(1000);
         }
