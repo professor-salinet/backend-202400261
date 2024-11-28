@@ -12,11 +12,11 @@ public class CopyFile {
             int returnVal1 = chooser.showOpenDialog(null);
             String fileFullPath = "";
             String fileName = "";
-            if (returnVal1 == JFileChooser.APPROVE_OPTION) {
+            if(returnVal1 == JFileChooser.APPROVE_OPTION) {
                 fileFullPath = chooser.getSelectedFile().getAbsolutePath();
                 fileName = chooser.getSelectedFile().getName();
             } else {
-                System.out.println("O usuário não copiou o arquivo selecionado!");
+                System.out.println("Usuário não selecionou o arquivo para copiar...");
             }
 
             chooser.setDialogTitle("Selecione a pasta de destino.");
@@ -24,22 +24,26 @@ public class CopyFile {
             chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
             int returnVal2 = chooser.showOpenDialog(null);
             String folderFullPath = "";
-            if (returnVal2 == JFileChooser.APPROVE_OPTION) {
+            if(returnVal2 == JFileChooser.APPROVE_OPTION) {
                 folderFullPath = chooser.getSelectedFile().getAbsolutePath();
             } else {
-                System.out.println("O usuário não selecionou a pasta de destino!");
+                System.out.println("O usuário não selecionou a pasta para colar...");
             }
 
             Path pathOrigin = Paths.get(fileFullPath);
             Path pathDestination = Paths.get(folderFullPath + "\\" + fileName);
             if (fileFullPath.length() > 0 && folderFullPath.length() > 0) {
                 Files.copy(pathOrigin, pathDestination, REPLACE_EXISTING);
-                System.out.println("Arquivo " + fileName + " copiado/colado com sucesso!");
+                System.out.println("Arquivo " + chooser.getSelectedFile().getName() + " copiado/colado com sucesso.");
             } else {
-                System.out.println("Ops! Não foi possível copiar o arquivo. Por favor, verifique e tente novamente.");
+                System.out.println("Ops! Não foi possível copiar o arquivo. Por favor, verifique e tente novamente mais tarde.");
             }
         } catch (Exception e) {
-            System.err.println("Não foi possível copiar o arquivo! Tente novamente mais tarde.");
+            System.out.println("Não foi possível copiar o arquivo.");
         }
+    }
+
+    public static void main(String[] args) throws Exception {
+        copiarArquivo();
     }
 }
