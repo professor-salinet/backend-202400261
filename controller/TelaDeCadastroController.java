@@ -45,6 +45,7 @@ public class TelaDeCadastroController extends TelaDeCadastroView {
     }
 
     public static void removerFoto() {
-        
+        lblFoto.setIcon(new ImageIcon(new ImageIcon(localViewFolder + "\\imagem-padrao.jpg").getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT)));
+        nomeArquivoFoto = "";
     }
 }
