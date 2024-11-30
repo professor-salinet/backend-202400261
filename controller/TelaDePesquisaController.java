@@ -1,6 +1,8 @@
 package controller;
 import view.*;
 import model.*;
+import javax.swing.*;
+import java.awt.*;
 
 public class TelaDePesquisaController extends TelaDePesquisaView {
     public static String registroDePesquisa = "";
@@ -31,7 +33,17 @@ public class TelaDePesquisaController extends TelaDePesquisaView {
         TelaDePesquisaModel.inicializacaoDeRegistrosModel();
     }
 
-    public static void atualizarCampos(String id, String nome, String email) {
+    public static void atualizarCampos(String id, String nome, String email, String foto) {
+        if (foto != null) {
+            if (foto.length() > 0) {
+                lblFoto.setIcon(new ImageIcon(new ImageIcon(localViewImgFolder + "\\" + foto).getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT)));
+            } else {
+                lblFoto.setIcon(new ImageIcon(new ImageIcon(localViewFolder + "\\imagem-padrao.jpg").getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT)));
+            }
+        } else {
+            lblFoto.setIcon(new ImageIcon(new ImageIcon(localViewFolder + "\\imagem-padrao.jpg").getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT)));
+        }
+
         txtId.setText(id);
         txtNome.setText(nome);
         txtEmail.setText(email);

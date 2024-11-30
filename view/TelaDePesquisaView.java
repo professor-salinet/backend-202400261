@@ -6,9 +6,24 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class TelaDePesquisaView extends JFrame {
+    public static JLabel lblFoto;
     public static final JTextField txtPesquisa = new JTextField(20);
     public final JButton btnPesquisar;
     public final JButton btnReiniciarPesquisa;
+
+    public static final String localViewImgFolder = System.getProperty("user.dir") 
+        + "\\" 
+        + "src" 
+        + "\\" 
+        + "view" 
+        + "\\" 
+        + "img";
+
+    public static final String localViewFolder = System.getProperty("user.dir") 
+        + "\\" 
+        + "src" 
+        + "\\" 
+        + "view";
 
     public final JLabel lblId;
     public static final JTextField txtId = new JTextField(10);
@@ -19,71 +34,59 @@ public class TelaDePesquisaView extends JFrame {
     public final JLabel lblEmail;
     public static final JTextField txtEmail = new JTextField(10);
 
-    public static final JButton btnPrimeiro = new JButton("<<");;
-    public static final JButton btnAnterior = new JButton("<");;
-    public static final JButton btnProximo = new JButton(">");;
-    public static final JButton btnUltimo = new JButton(">>");;
+    public static final JButton btnPrimeiro = new JButton("<<");
+    public static final JButton btnAnterior = new JButton("<");
+    public static final JButton btnProximo = new JButton(">");
+    public static final JButton btnUltimo = new JButton(">>");
 
     public static final JLabel lblNotificacoes = new JLabel("Notificações", SwingConstants.CENTER);
 
+    public static GridBagLayout gbLayout;
+    public static GridBagConstraints gbConstraints;
+
     public TelaDePesquisaView() {
         super("Tela de Pesquisa");
-        setLayout(new GridLayout(7,1,5,5));
+        gbLayout = new GridBagLayout();
+        setLayout(gbLayout);
+        gbConstraints = new GridBagConstraints();
 
-        JPanel linhaInputPesquisa = new JPanel(new GridLayout(1,1));
-        // txtPesquisa = new JTextField(20);
-        linhaInputPesquisa.add(txtPesquisa);
-        add(linhaInputPesquisa);
+        lblFoto = new JLabel("", SwingConstants.CENTER);
+        lblFoto.setIcon(new ImageIcon(new ImageIcon(localViewFolder + "\\imagem-padrao.jpg").getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT)));
+        addComponent(lblFoto, 0, 0, 4, 2);
 
-        JPanel linhaBotaoPesquisar = new JPanel(new GridLayout(1,2));
+        addComponent(txtPesquisa, 2, 0, 4, 1);
 
         btnPesquisar = new JButton("Pesquisar");
         btnPesquisar.setEnabled(false);
-        linhaBotaoPesquisar.add(btnPesquisar);
+        addComponent(btnPesquisar, 3, 0, 2, 1);
 
         btnReiniciarPesquisa = new JButton("Reiniciar Pesquisa");
-        linhaBotaoPesquisar.add(btnReiniciarPesquisa);
-        add(linhaBotaoPesquisar);
+        addComponent(btnReiniciarPesquisa, 3, 2, 2, 1);
 
-        JPanel linhaId = new JPanel(new GridLayout(1,2));
         lblId = new JLabel("Id:", SwingConstants.RIGHT);
-        // txtId = new JTextField(10);
+        addComponent(lblId, 4, 0, 2, 1);
+
         txtId.setEditable(false);
-        linhaId.add(lblId);
-        linhaId.add(txtId);
-        add(linhaId);
+        addComponent(txtId, 4, 2, 2, 1);
 
-        JPanel linhaNome = new JPanel(new GridLayout(1,2));
         lblNome = new JLabel("Nome:", SwingConstants.RIGHT);
-        // txtNome = new JTextField(10);
+        addComponent(lblNome, 5, 0, 2, 1);
+
         txtNome.setEditable(false);
-        linhaNome.add(lblNome);
-        linhaNome.add(txtNome);
-        add(linhaNome);
+        addComponent(txtNome, 5, 2, 2, 1);
 
-        JPanel linhaEmail = new JPanel(new GridLayout(1,2));
         lblEmail = new JLabel("Email:", SwingConstants.RIGHT);
-        // txtEmail = new JTextField(10);
+        addComponent(lblEmail, 6, 0, 2, 1);
+
         txtEmail.setEditable(false);
-        linhaEmail.add(lblEmail);
-        linhaEmail.add(txtEmail);
-        add(linhaEmail);
+        addComponent(txtEmail, 6, 2, 2, 1);
 
-        JPanel linhaBotoes = new JPanel(new GridLayout(1,4));
-        // btnPrimeiro = new JButton("<<");
-        // btnAnterior = new JButton("<");
-        // btnProximo = new JButton(">");
-        // btnUltimo = new JButton(">>");
-        linhaBotoes.add(btnPrimeiro);
-        linhaBotoes.add(btnAnterior);
-        linhaBotoes.add(btnProximo);
-        linhaBotoes.add(btnUltimo);
-        add(linhaBotoes);
+        addComponent(btnPrimeiro, 7, 0, 1, 1);
+        addComponent(btnAnterior, 7, 1, 1, 1);
+        addComponent(btnProximo, 7, 2, 1, 1);
+        addComponent(btnUltimo, 7, 3, 1, 1);
 
-        JPanel linhaNotificacoes = new JPanel(new GridLayout(1,1));
-        // lblNotificacoes = new JLabel("Notificações", SwingConstants.CENTER);
-        linhaNotificacoes.add(lblNotificacoes);
-        add(linhaNotificacoes);
+        addComponent(lblNotificacoes, 8, 0, 4, 1);
 
         btnPrimeiro.addActionListener(
             new ActionListener() {
@@ -171,10 +174,27 @@ public class TelaDePesquisaView extends JFrame {
             }
         );
 
-        setSize(300,300);
+        setSize(300,340);
         setVisible(true);
 
         TelaDePesquisaController.inicializacaoDeRegistros();
+    }
+
+    public void addComponent(Component component, int row, int column, int width, int height) {
+        if (height > 1 && width > 1) {
+            gbConstraints.fill = GridBagConstraints.BOTH;
+        } else if (height > 1) {
+            gbConstraints.fill = GridBagConstraints.VERTICAL;
+        } else {
+            gbConstraints.fill = GridBagConstraints.HORIZONTAL;
+        }
+        gbConstraints.gridy = row;
+        gbConstraints.gridx = column;
+        gbConstraints.gridwidth = width;
+        gbConstraints.gridheight = height;
+        // gbConstraints.insets = new Insets(1, 1, 1, 1); // sugestão de margem de elemento, crédios pro aluno Fernando
+        gbLayout.setConstraints(component, gbConstraints);
+        add(component);
     }
 
     public static void notificarUsuario(String strTexto) {
@@ -227,9 +247,22 @@ public class TelaDePesquisaView extends JFrame {
         txtEmail.setText("");
     }
 
+    public static void verificarLarguraEAltura() { // checkFrameWidthHeight()
+        appTelaDePesquisaView.getRootPane().addComponentListener(
+            new ComponentAdapter() {
+                public void componentResized(ComponentEvent e) {
+                    int larguraTela = appTelaDePesquisaView.getWidth();
+                    int alturaTela = appTelaDePesquisaView.getHeight();
+                    notificarUsuario(String.format("Largura: %s, Altura: %s", larguraTela, alturaTela));
+                }
+            }
+        );
+    }
+
     public static TelaDePesquisaView appTelaDePesquisaView;
     public static void main(String[] args) {
         appTelaDePesquisaView = new TelaDePesquisaView();
         appTelaDePesquisaView.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        verificarLarguraEAltura();
     }
 }
