@@ -6,6 +6,25 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class TelaDeCadastroView extends JFrame {
+    public static JLabel lblFoto;
+    public static JButton btnCarregarFoto;
+    public static JButton btnRemoverFoto;
+    public static String nomeArquivoFoto = "";
+
+    public static final String localViewImgFolder = System.getProperty("user.dir") 
+        + "\\" 
+        + "src" 
+        + "\\" 
+        + "view" 
+        + "\\" 
+        + "img";
+
+    public static final String localViewFolder = System.getProperty("user.dir") 
+        + "\\" 
+        + "src" 
+        + "\\" 
+        + "view";
+
     public static JLabel lblNome;
     public static JTextField txtNome;
 
@@ -30,32 +49,42 @@ public class TelaDeCadastroView extends JFrame {
         setLayout(gbLayout);
         gbConstraints = new GridBagConstraints();
 
+        lblFoto = new JLabel("", SwingConstants.CENTER);
+        lblFoto.setIcon(new ImageIcon(new ImageIcon(localViewFolder + "\\imagem-padrao.jpg").getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT)));
+        addComponent(lblFoto, 0, 0, 2, 2);
+
+        btnCarregarFoto = new JButton("Carregar foto");
+        addComponent(btnCarregarFoto, 2, 0, 1, 1);
+
+        btnRemoverFoto = new JButton("Remover foto");
+        addComponent(btnRemoverFoto, 2, 1, 1, 1);
+
         lblNome = new JLabel("Nome:", SwingConstants.RIGHT);
-        addComponent(lblNome, 0, 0, 1, 1);
+        addComponent(lblNome, 3, 0, 1, 1);
 
         txtNome = new JTextField(10);
-        addComponent(txtNome, 0, 1, 1, 1);
+        addComponent(txtNome, 3, 1, 1, 1);
 
         lblEmail = new JLabel("Email:", SwingConstants.RIGHT);
-        addComponent(lblEmail, 1, 0, 1, 1);
+        addComponent(lblEmail, 4, 0, 1, 1);
 
         txtEmail = new JTextField(10);
-        addComponent(txtEmail, 1, 1, 1, 1);
+        addComponent(txtEmail, 4, 1, 1, 1);
 
         lblSenha = new JLabel("Senha:", SwingConstants.RIGHT);
-        addComponent(lblSenha, 2, 0, 1, 1);
+        addComponent(lblSenha, 5, 0, 1, 1);
 
         txtSenha = new JPasswordField(10);
-        addComponent(txtSenha, 2, 1, 1, 1);
+        addComponent(txtSenha, 5, 1, 1, 1);
 
         btnCadastrar = new JButton("Cadastrar");
-        addComponent(btnCadastrar, 3, 0, 1, 1);
+        addComponent(btnCadastrar, 6, 0, 1, 1);
 
         btnCancelar = new JButton("Cancelar");
-        addComponent(btnCancelar, 3, 1, 1, 1);
+        addComponent(btnCancelar, 6, 1, 1, 1);
 
         lblNotificacoes = new JLabel("Notificações", SwingConstants.CENTER);
-        addComponent(lblNotificacoes, 4, 0, 2, 1);
+        addComponent(lblNotificacoes, 7, 0, 2, 1);
 
         btnCadastrar.addActionListener(
             new ActionListener() {
@@ -94,7 +123,25 @@ public class TelaDeCadastroView extends JFrame {
             }
         );
 
-        setSize(217,154);
+        btnCarregarFoto.addActionListener(
+            new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent event) {
+                    TelaDeCadastroController.carregarFoto();
+                }
+            }
+        );
+
+        btnRemoverFoto.addActionListener(
+            new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent event) {
+                    TelaDeCadastroController.removerFoto();
+                }
+            }
+        );
+
+        setSize(280,280);
         setVisible(true);
     }
 
