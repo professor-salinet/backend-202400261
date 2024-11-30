@@ -41,7 +41,7 @@ public class TelaDeRemoverModel {
             Statement stmSqlAtualizarCampos = conexao.createStatement();
             ResultSet rstSqlAtualizarCampos = stmSqlAtualizarCampos.executeQuery(strSqlAtualizarCampos);
             if (rstSqlAtualizarCampos.next()) {
-                TelaDeRemoverController.preencherCampos(rstSqlAtualizarCampos.getString("nome"), rstSqlAtualizarCampos.getString("email"));
+                TelaDeRemoverController.preencherCampos(rstSqlAtualizarCampos.getString("nome"), rstSqlAtualizarCampos.getString("email"), rstSqlAtualizarCampos.getString("img"));
             } else {
                 TelaDeRemoverController.notificarUsuario("Id não encontrado.");
             }

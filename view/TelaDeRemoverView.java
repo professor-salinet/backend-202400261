@@ -6,6 +6,22 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class TelaDeRemoverView extends JFrame {
+    public static JLabel lblFoto;
+
+    public static final String localViewImgFolder = System.getProperty("user.dir") 
+        + "\\" 
+        + "src" 
+        + "\\" 
+        + "view" 
+        + "\\" 
+        + "img";
+
+    public static final String localViewFolder = System.getProperty("user.dir") 
+        + "\\" 
+        + "src" 
+        + "\\" 
+        + "view";
+
     public static JLabel lblId;
     public static JComboBox<String> cbxId;
 
@@ -30,37 +46,41 @@ public class TelaDeRemoverView extends JFrame {
         setLayout(gbLayout);
         gbConstraints = new GridBagConstraints();
 
+        lblFoto = new JLabel("", SwingConstants.CENTER);
+        lblFoto.setIcon(new ImageIcon(new ImageIcon(localViewFolder + "\\imagem-padrao.jpg").getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT)));
+        addComponent(lblFoto, 0, 0, 4, 2);
+
         lblId = new JLabel("Id:", SwingConstants.RIGHT);
-        addComponent(lblId, 0, 0, 1, 1);
+        addComponent(lblId, 2, 0, 1, 1);
 
         cbxId = new JComboBox<String>();
         TelaDeRemoverController.popularCbxIdController();
-        addComponent(cbxId, 0, 1, 1, 1);
+        addComponent(cbxId, 2, 1, 1, 1);
 
         lblNome = new JLabel("Nome:", SwingConstants.RIGHT);
-        addComponent(lblNome, 1, 0, 1, 1);
+        addComponent(lblNome, 3, 0, 1, 1);
 
         txtNome = new JTextField(10);
         txtNome.setEditable(false);
-        addComponent(txtNome, 1, 1, 1, 1);
+        addComponent(txtNome, 3, 1, 1, 1);
 
         lblEmail = new JLabel("Email:", SwingConstants.RIGHT);
-        addComponent(lblEmail, 2, 0, 1, 1);
+        addComponent(lblEmail, 4, 0, 1, 1);
 
         txtEmail = new JTextField(10);
         txtEmail.setEditable(false);
-        addComponent(txtEmail, 2, 1, 1, 1);
+        addComponent(txtEmail, 4, 1, 1, 1);
 
         TelaDeRemoverController.atualizarCamposController();
 
         btnRemover = new JButton("Remover");
-        addComponent(btnRemover, 4, 0, 1, 1);
+        addComponent(btnRemover, 5, 0, 1, 1);
 
         btnCancelar = new JButton("Cancelar");
-        addComponent(btnCancelar, 4, 1, 1, 1);
+        addComponent(btnCancelar, 5, 1, 1, 1);
 
         lblNotificacoes = new JLabel("Notificações", SwingConstants.CENTER);
-        addComponent(lblNotificacoes, 5, 0, 2, 1);
+        addComponent(lblNotificacoes, 6, 0, 2, 1);
 
         cbxId.addItemListener(
             new ItemListener() {
@@ -100,7 +120,7 @@ public class TelaDeRemoverView extends JFrame {
             }
         );
 
-        setSize(206,154);
+        setSize(300,300);
         setVisible(true);
     }
 
