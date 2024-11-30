@@ -34,6 +34,7 @@ public class TelaDeAtualizacaoModel {
                 dados.add(rstSqlAtualizarCampos.getString("nome"));
                 TelaDeAtualizacaoController.txtNomeCarregado = rstSqlAtualizarCampos.getString("nome");
                 dados.add(rstSqlAtualizarCampos.getString("email"));
+                dados.add(rstSqlAtualizarCampos.getString("img"));
                 TelaDeAtualizacaoController.txtEmailCarregado = rstSqlAtualizarCampos.getString("email");
                 // txtSenha.setText("");
             } else {
@@ -46,7 +47,7 @@ public class TelaDeAtualizacaoModel {
         return dados;
     }
 
-    public static boolean atualizarModel(String id, String nome, String email, String senha) {
+    public static boolean atualizarModel(String id, String nome, String email, String senha, String img) {
         boolean atualizou = false;
         try {
             Connection conexao = MySQLConnector.conectar();
@@ -54,7 +55,7 @@ public class TelaDeAtualizacaoModel {
             if (senha.length() > 0) {
                 atualizarSenha = ", `senha` = '" + senha + "'";
             }
-            String strSqlAtualizarId = "update `db_senac`.`tbl_senac` set `nome` = '" + nome + "', `email` = '" + email + "'" + atualizarSenha + " where `id` = " + id + ";";
+            String strSqlAtualizarId = "update `db_senac`.`tbl_senac` set `nome` = '" + nome + "', `email` = '" + email + "'" + atualizarSenha + ", `img` = '" + img + "' where `id` = " + id + ";";
             Statement stmSqlAtualizarId = conexao.createStatement();
             stmSqlAtualizarId.addBatch(strSqlAtualizarId);
             stmSqlAtualizarId.executeBatch();
