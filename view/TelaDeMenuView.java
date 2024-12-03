@@ -38,7 +38,6 @@ public class TelaDeMenuView extends JFrame {
 
         menuBar.add(cadastroMenu);
 
-
         setJMenuBar(menuBar);
 
         add(lblNomeDaTela, BorderLayout.CENTER);
@@ -135,5 +134,13 @@ public class TelaDeMenuView extends JFrame {
     public static void main(String[] args) {
         appTelaDeMenuView = new TelaDeMenuView();
         appTelaDeMenuView.setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+        appTelaDeMenuView.addWindowListener(
+            new WindowAdapter() {
+                public void windowClosing(WindowEvent e) {
+                    InterfaceView.removerImagensInuteis();
+                }
+            }
+        );
     }
 }

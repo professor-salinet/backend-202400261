@@ -1,5 +1,6 @@
 package model;
 import controller.*;
+import view.InterfaceView;
 
 import java.sql.*;
 
@@ -11,9 +12,9 @@ public class TelaDeRemoverModel {
             Statement stmSqlRemoverId = conexao.createStatement();
             stmSqlRemoverId.addBatch(strSqlRemoverId);
             stmSqlRemoverId.executeBatch();
-            TelaDeRemoverController.notificarUsuario("O id " + id + " foi removido com sucesso.");
+            InterfaceView.notificarUsuario("O id " + id + " foi removido com sucesso.", TelaDeRemoverController.lblNotificacoes);
         } catch (Exception e) {
-            TelaDeRemoverController.notificarUsuario("Ops! Problema no servidor, tente novamente mais tarde.");
+            InterfaceView.notificarUsuario("Ops! Problema no servidor, tente novamente mais tarde.", TelaDeRemoverController.lblNotificacoes);
             System.err.println("Erro: " + e);
         }
     }
@@ -29,7 +30,7 @@ public class TelaDeRemoverModel {
             }
             stmSqlPopularCbxId.close();
         } catch (Exception e) {
-            TelaDeRemoverController.notificarUsuario("Ops! Ocorreu um problema no servidor e não será possível carregar os ids neste momento. Por favor, retorne novamente mais tarde.");
+            InterfaceView.notificarUsuario("Ops! Ocorreu um problema no servidor e não será possível carregar os ids neste momento. Por favor, retorne novamente mais tarde.", TelaDeRemoverController.lblNotificacoes);
             System.err.println("Erro: " + e);
         }
     }
@@ -43,10 +44,10 @@ public class TelaDeRemoverModel {
             if (rstSqlAtualizarCampos.next()) {
                 TelaDeRemoverController.preencherCampos(rstSqlAtualizarCampos.getString("nome"), rstSqlAtualizarCampos.getString("email"), rstSqlAtualizarCampos.getString("img"));
             } else {
-                TelaDeRemoverController.notificarUsuario("Id não encontrado.");
+                InterfaceView.notificarUsuario("Id não encontrado.", TelaDeRemoverController.lblNotificacoes);
             }
         } catch (Exception e) {
-            TelaDeRemoverController.notificarUsuario("Ops! Problema no servidor. Tente novamente mais tarde.");
+            InterfaceView.notificarUsuario("Ops! Problema no servidor. Tente novamente mais tarde.", TelaDeRemoverController.lblNotificacoes);
             System.err.println("Erro: " + e);
         }
     }

@@ -1,5 +1,6 @@
 package model;
 import controller.*;
+import view.InterfaceView;
 
 import java.sql.*;
 import java.util.*;
@@ -17,7 +18,7 @@ public class TelaDeAtualizacaoModel {
             }
             stmSqlPopularCbxId.close();
         } catch (Exception e) {
-            TelaDeAtualizacaoController.notificarUsuario("Ops! Ocorreu um problema no servidor e não será possível carregar os ids neste momento. Por favor, retorne novamente mais tarde.");
+            InterfaceView.notificarUsuario("Ops! Ocorreu um problema no servidor e não será possível carregar os ids neste momento. Por favor, retorne novamente mais tarde.", TelaDeAtualizacaoController.lblNotificacoes);
             System.err.println("Erro: " + e);
         }
         return ids;
@@ -38,10 +39,10 @@ public class TelaDeAtualizacaoModel {
                 TelaDeAtualizacaoController.txtEmailCarregado = rstSqlAtualizarCampos.getString("email");
                 // txtSenha.setText("");
             } else {
-                TelaDeAtualizacaoController.notificarUsuario("Id não encontrado.");
+                InterfaceView.notificarUsuario("Id não encontrado.", TelaDeAtualizacaoController.lblNotificacoes);
             }
         } catch (Exception e) {
-            TelaDeAtualizacaoController.notificarUsuario("Ops! Problema no servidor. Tente novamente mais tarde.");
+            InterfaceView.notificarUsuario("Ops! Problema no servidor. Tente novamente mais tarde.", TelaDeAtualizacaoController.lblNotificacoes);
             System.err.println("Erro: " + e);
         }
         return dados;
@@ -60,9 +61,9 @@ public class TelaDeAtualizacaoModel {
             stmSqlAtualizarId.addBatch(strSqlAtualizarId);
             stmSqlAtualizarId.executeBatch();
             atualizou = true;
-            TelaDeAtualizacaoController.notificarUsuario("O id " + id + " foi atualizado com sucesso.");
+            InterfaceView.notificarUsuario("O id " + id + " foi atualizado com sucesso.", TelaDeAtualizacaoController.lblNotificacoes);
         } catch (Exception e) {
-            TelaDeAtualizacaoController.notificarUsuario("Ops! Problema no servidor, tente novamente mais tarde.");
+            InterfaceView.notificarUsuario("Ops! Problema no servidor, tente novamente mais tarde.", TelaDeAtualizacaoController.lblNotificacoes);
             System.err.println("Erro: " + e);
         }
         return atualizou;

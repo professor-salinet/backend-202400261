@@ -29,7 +29,7 @@ public class TelaDeCadastroController extends TelaDeCadastroView {
             }
 
             Path pathOrigin = Paths.get(fileFullPath);
-            Path pathDestination = Paths.get(localViewImgFolder + "\\" + fileName);
+            Path pathDestination = Paths.get(InterfaceView.localViewImgFolder + "\\" + fileName);
             if (fileFullPath.length() > 0) {
                 Files.copy(pathOrigin, pathDestination, REPLACE_EXISTING);
                 System.out.println("Arquivo " + chooser.getSelectedFile().getName() + " copiado/colado com sucesso.");
@@ -39,14 +39,14 @@ public class TelaDeCadastroController extends TelaDeCadastroView {
 
             nomeArquivoFoto = fileName;
 
-            lblFoto.setIcon(new ImageIcon(new ImageIcon(localViewImgFolder + "\\" + nomeArquivoFoto).getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT)));
+            lblFoto.setIcon(new ImageIcon(new ImageIcon(InterfaceView.localViewImgFolder + "\\" + nomeArquivoFoto).getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT)));
         } catch (Exception e) {
             System.out.println("Não foi possível copiar o arquivo.");
         }
     }
 
     public static void removerFoto() {
-        lblFoto.setIcon(new ImageIcon(new ImageIcon(localViewFolder + "\\imagem-padrao.jpg").getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT)));
+        lblFoto.setIcon(new ImageIcon(new ImageIcon(InterfaceView.localViewFolder + "\\imagem-padrao.jpg").getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT)));
         nomeArquivoFoto = "";
     }
 }

@@ -11,20 +11,6 @@ public class TelaDeAtualizacaoView extends JFrame {
     public static JButton btnRemoverFoto;
     public static String nomeArquivoFoto = "";
 
-    public static final String localViewImgFolder = System.getProperty("user.dir") 
-        + "\\" 
-        + "src" 
-        + "\\" 
-        + "view" 
-        + "\\" 
-        + "img";
-
-    public static final String localViewFolder = System.getProperty("user.dir") 
-        + "\\" 
-        + "src" 
-        + "\\" 
-        + "view";
-
     public static JLabel lblId;
     public static JComboBox<String> cbxId;
 
@@ -55,51 +41,51 @@ public class TelaDeAtualizacaoView extends JFrame {
         gbConstraints = new GridBagConstraints();
 
         lblFoto = new JLabel("", SwingConstants.CENTER);
-        lblFoto.setIcon(new ImageIcon(new ImageIcon(localViewFolder + "\\imagem-padrao.jpg").getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT)));
-        addComponent(lblFoto, 0, 0, 2, 2);
+        lblFoto.setIcon(new ImageIcon(new ImageIcon(InterfaceView.localViewFolder + "\\imagem-padrao.jpg").getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT)));
+        InterfaceView.addComponent(lblFoto, 0, 0, 2, 2, gbLayout, gbConstraints, this);
 
         btnCarregarFoto = new JButton("Carregar foto");
-        addComponent(btnCarregarFoto, 2, 0, 1, 1);
+        InterfaceView.addComponent(btnCarregarFoto, 2, 0, 1, 1, gbLayout, gbConstraints, this);
 
         btnRemoverFoto = new JButton("Remover foto");
-        addComponent(btnRemoverFoto, 2, 1, 1, 1);
+        InterfaceView.addComponent(btnRemoverFoto, 2, 1, 1, 1, gbLayout, gbConstraints, this);
 
         lblId = new JLabel("Id:", SwingConstants.RIGHT);
-        addComponent(lblId, 3, 0, 1, 1);
+        InterfaceView.addComponent(lblId, 3, 0, 1, 1, gbLayout, gbConstraints, this);
 
         cbxId = new JComboBox<String>();
         TelaDeAtualizacaoController.popularCbxIdController();
-        addComponent(cbxId, 3, 1, 1, 1);
+        InterfaceView.addComponent(cbxId, 3, 1, 1, 1, gbLayout, gbConstraints, this);
 
         lblNome = new JLabel("Nome:", SwingConstants.RIGHT);
-        addComponent(lblNome, 4, 0, 1, 1);
+        InterfaceView.addComponent(lblNome, 4, 0, 1, 1, gbLayout, gbConstraints, this);
 
         txtNome = new JTextField(10);
-        addComponent(txtNome, 4, 1, 1, 1);
+        InterfaceView.addComponent(txtNome, 4, 1, 1, 1, gbLayout, gbConstraints, this);
 
         lblEmail = new JLabel("Email:", SwingConstants.RIGHT);
-        addComponent(lblEmail, 5, 0, 1, 1);
+        InterfaceView.addComponent(lblEmail, 5, 0, 1, 1, gbLayout, gbConstraints, this);
 
         txtEmail = new JTextField(10);
-        addComponent(txtEmail, 5, 1, 1, 1);
+        InterfaceView.addComponent(txtEmail, 5, 1, 1, 1, gbLayout, gbConstraints, this);
 
         TelaDeAtualizacaoController.atualizarCamposController();
 
         lblSenha = new JLabel("Senha:", SwingConstants.RIGHT);
-        addComponent(lblSenha, 6, 0, 1, 1);
+        InterfaceView.addComponent(lblSenha, 6, 0, 1, 1, gbLayout, gbConstraints, this);
 
         txtSenha = new JPasswordField(10);
-        addComponent(txtSenha, 6, 1, 1, 1);
+        InterfaceView.addComponent(txtSenha, 6, 1, 1, 1, gbLayout, gbConstraints, this);
 
         btnAtualizar = new JButton("Atualizar");
         btnAtualizar.setEnabled(false);
-        addComponent(btnAtualizar, 7, 0, 1, 1);
+        InterfaceView.addComponent(btnAtualizar, 7, 0, 1, 1, gbLayout, gbConstraints, this);
 
         btnCancelar = new JButton("Cancelar");
-        addComponent(btnCancelar, 7, 1, 1, 1);
+        InterfaceView.addComponent(btnCancelar, 7, 1, 1, 1, gbLayout, gbConstraints, this);
 
         lblNotificacoes = new JLabel("Notificações", SwingConstants.CENTER);
-        addComponent(lblNotificacoes, 8, 0, 2, 1);
+        InterfaceView.addComponent(lblNotificacoes, 8, 0, 2, 1, gbLayout, gbConstraints, this);
 
         cbxId.addItemListener(
             new ItemListener() {
@@ -204,46 +190,10 @@ public class TelaDeAtualizacaoView extends JFrame {
         setVisible(true);
     }
 
-    public void addComponent(Component component, int row, int column, int width, int height) {
-        if (height > 1 && width > 1) {
-            gbConstraints.fill = GridBagConstraints.BOTH;
-        } else if (height > 1) {
-            gbConstraints.fill = GridBagConstraints.VERTICAL;
-        } else {
-            gbConstraints.fill = GridBagConstraints.HORIZONTAL;
-        }
-        gbConstraints.gridy = row;
-        gbConstraints.gridx = column;
-        gbConstraints.gridwidth = width;
-        gbConstraints.gridheight = height;
-        gbLayout.setConstraints(component, gbConstraints);
-        add(component);
-    }
-
-    public static void notificarUsuario(String str) {
-        lblNotificacoes.setText(setHtmlFormat(str));
-    }
-
-    public static String setHtmlFormat(String str) {
-        return "<html><body>" + str + "</body></html>";
-    }
-
-    public static void verificarLarguraEAltura() { // checkFrameWidthHeight()
-        appTelaDeAtualizacaoView.getRootPane().addComponentListener(
-            new ComponentAdapter() {
-                public void componentResized(ComponentEvent e) {
-                    int larguraTela = appTelaDeAtualizacaoView.getWidth();
-                    int alturaTela = appTelaDeAtualizacaoView.getHeight();
-                    notificarUsuario(String.format("Largura: %s, Altura: %s", larguraTela, alturaTela));
-                }
-            }
-        );
-    }
-
     public static TelaDeAtualizacaoView appTelaDeAtualizacaoView;
     public static void main(String[] args) {
         appTelaDeAtualizacaoView = new TelaDeAtualizacaoView();
         appTelaDeAtualizacaoView.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        // verificarLarguraEAltura();
+        // InterfaceView.verificarLarguraEAltura(appTelaDeAtualizacaoView,lblNotificacoes);
     }
 }

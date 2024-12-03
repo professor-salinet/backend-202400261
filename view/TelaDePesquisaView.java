@@ -11,20 +11,6 @@ public class TelaDePesquisaView extends JFrame {
     public final JButton btnPesquisar;
     public final JButton btnReiniciarPesquisa;
 
-    public static final String localViewImgFolder = System.getProperty("user.dir") 
-        + "\\" 
-        + "src" 
-        + "\\" 
-        + "view" 
-        + "\\" 
-        + "img";
-
-    public static final String localViewFolder = System.getProperty("user.dir") 
-        + "\\" 
-        + "src" 
-        + "\\" 
-        + "view";
-
     public final JLabel lblId;
     public static final JTextField txtId = new JTextField(10);
 
@@ -51,42 +37,42 @@ public class TelaDePesquisaView extends JFrame {
         gbConstraints = new GridBagConstraints();
 
         lblFoto = new JLabel("", SwingConstants.CENTER);
-        lblFoto.setIcon(new ImageIcon(new ImageIcon(localViewFolder + "\\imagem-padrao.jpg").getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT)));
-        addComponent(lblFoto, 0, 0, 4, 2);
+        lblFoto.setIcon(new ImageIcon(new ImageIcon(InterfaceView.localViewFolder + "\\imagem-padrao.jpg").getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT)));
+        InterfaceView.addComponent(lblFoto, 0, 0, 4, 2, gbLayout, gbConstraints, this);
 
-        addComponent(txtPesquisa, 2, 0, 4, 1);
+        InterfaceView.addComponent(txtPesquisa, 2, 0, 4, 1, gbLayout, gbConstraints, this);
 
         btnPesquisar = new JButton("Pesquisar");
         btnPesquisar.setEnabled(false);
-        addComponent(btnPesquisar, 3, 0, 2, 1);
+        InterfaceView.addComponent(btnPesquisar, 3, 0, 2, 1, gbLayout, gbConstraints, this);
 
         btnReiniciarPesquisa = new JButton("Reiniciar Pesquisa");
-        addComponent(btnReiniciarPesquisa, 3, 2, 2, 1);
+        InterfaceView.addComponent(btnReiniciarPesquisa, 3, 2, 2, 1, gbLayout, gbConstraints, this);
 
         lblId = new JLabel("Id:", SwingConstants.RIGHT);
-        addComponent(lblId, 4, 0, 2, 1);
+        InterfaceView.addComponent(lblId, 4, 0, 2, 1, gbLayout, gbConstraints, this);
 
         txtId.setEditable(false);
-        addComponent(txtId, 4, 2, 2, 1);
+        InterfaceView.addComponent(txtId, 4, 2, 2, 1, gbLayout, gbConstraints, this);
 
         lblNome = new JLabel("Nome:", SwingConstants.RIGHT);
-        addComponent(lblNome, 5, 0, 2, 1);
+        InterfaceView.addComponent(lblNome, 5, 0, 2, 1, gbLayout, gbConstraints, this);
 
         txtNome.setEditable(false);
-        addComponent(txtNome, 5, 2, 2, 1);
+        InterfaceView.addComponent(txtNome, 5, 2, 2, 1, gbLayout, gbConstraints, this);
 
         lblEmail = new JLabel("Email:", SwingConstants.RIGHT);
-        addComponent(lblEmail, 6, 0, 2, 1);
+        InterfaceView.addComponent(lblEmail, 6, 0, 2, 1, gbLayout, gbConstraints, this);
 
         txtEmail.setEditable(false);
-        addComponent(txtEmail, 6, 2, 2, 1);
+        InterfaceView.addComponent(txtEmail, 6, 2, 2, 1, gbLayout, gbConstraints, this);
 
-        addComponent(btnPrimeiro, 7, 0, 1, 1);
-        addComponent(btnAnterior, 7, 1, 1, 1);
-        addComponent(btnProximo, 7, 2, 1, 1);
-        addComponent(btnUltimo, 7, 3, 1, 1);
+        InterfaceView.addComponent(btnPrimeiro, 7, 0, 1, 1, gbLayout, gbConstraints, this);
+        InterfaceView.addComponent(btnAnterior, 7, 1, 1, 1, gbLayout, gbConstraints, this);
+        InterfaceView.addComponent(btnProximo, 7, 2, 1, 1, gbLayout, gbConstraints, this);
+        InterfaceView.addComponent(btnUltimo, 7, 3, 1, 1, gbLayout, gbConstraints, this);
 
-        addComponent(lblNotificacoes, 8, 0, 4, 1);
+        InterfaceView.addComponent(lblNotificacoes, 8, 0, 4, 1, gbLayout, gbConstraints, this);
 
         btnPrimeiro.addActionListener(
             new ActionListener() {
@@ -180,31 +166,6 @@ public class TelaDePesquisaView extends JFrame {
         TelaDePesquisaController.inicializacaoDeRegistros();
     }
 
-    public void addComponent(Component component, int row, int column, int width, int height) {
-        if (height > 1 && width > 1) {
-            gbConstraints.fill = GridBagConstraints.BOTH;
-        } else if (height > 1) {
-            gbConstraints.fill = GridBagConstraints.VERTICAL;
-        } else {
-            gbConstraints.fill = GridBagConstraints.HORIZONTAL;
-        }
-        gbConstraints.gridy = row;
-        gbConstraints.gridx = column;
-        gbConstraints.gridwidth = width;
-        gbConstraints.gridheight = height;
-        // gbConstraints.insets = new Insets(1, 1, 1, 1); // sugestão de margem de elemento, crédios pro aluno Fernando
-        gbLayout.setConstraints(component, gbConstraints);
-        add(component);
-    }
-
-    public static void notificarUsuario(String strTexto) {
-        lblNotificacoes.setText(setHtmlFormat(strTexto));
-    }
-
-    public static String setHtmlFormat(String strTexto) {
-        return "<html><body>" + strTexto + "</body></html>";
-    }
-
     public static void habilitarVoltar() {
         btnPrimeiro.setEnabled(true);
         btnAnterior.setEnabled(true);
@@ -247,22 +208,10 @@ public class TelaDePesquisaView extends JFrame {
         txtEmail.setText("");
     }
 
-    public static void verificarLarguraEAltura() { // checkFrameWidthHeight()
-        appTelaDePesquisaView.getRootPane().addComponentListener(
-            new ComponentAdapter() {
-                public void componentResized(ComponentEvent e) {
-                    int larguraTela = appTelaDePesquisaView.getWidth();
-                    int alturaTela = appTelaDePesquisaView.getHeight();
-                    notificarUsuario(String.format("Largura: %s, Altura: %s", larguraTela, alturaTela));
-                }
-            }
-        );
-    }
-
     public static TelaDePesquisaView appTelaDePesquisaView;
     public static void main(String[] args) {
         appTelaDePesquisaView = new TelaDePesquisaView();
         appTelaDePesquisaView.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        verificarLarguraEAltura();
+        // InterfaceView.verificarLarguraEAltura(appTelaDeAtualizacaoView,lblNotificacoes);
     }
 }

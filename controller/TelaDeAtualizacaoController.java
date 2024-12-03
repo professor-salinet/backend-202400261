@@ -22,14 +22,14 @@ public class TelaDeAtualizacaoController extends TelaDeAtualizacaoView {
         String foto = dados.get(2);
         if (foto != null) {
             if (foto.length() > 0) {
-                lblFoto.setIcon(new ImageIcon(new ImageIcon(localViewImgFolder + "\\" + foto).getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT)));
+                lblFoto.setIcon(new ImageIcon(new ImageIcon(InterfaceView.localViewImgFolder + "\\" + foto).getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT)));
                 btnRemoverFoto.setEnabled(true);
             } else {
-                lblFoto.setIcon(new ImageIcon(new ImageIcon(localViewFolder + "\\imagem-padrao.jpg").getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT)));
+                lblFoto.setIcon(new ImageIcon(new ImageIcon(InterfaceView.localViewFolder + "\\imagem-padrao.jpg").getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT)));
                 btnRemoverFoto.setEnabled(false);
             }
         } else {
-            lblFoto.setIcon(new ImageIcon(new ImageIcon(localViewFolder + "\\imagem-padrao.jpg").getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT)));
+            lblFoto.setIcon(new ImageIcon(new ImageIcon(InterfaceView.localViewFolder + "\\imagem-padrao.jpg").getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT)));
             btnRemoverFoto.setEnabled(false);
         }
 
@@ -62,7 +62,7 @@ public class TelaDeAtualizacaoController extends TelaDeAtualizacaoView {
             }
 
             Path pathOrigin = Paths.get(fileFullPath);
-            Path pathDestination = Paths.get(localViewImgFolder + "\\" + fileName);
+            Path pathDestination = Paths.get(InterfaceView.localViewImgFolder + "\\" + fileName);
             if (fileFullPath.length() > 0) {
                 Files.copy(pathOrigin, pathDestination, REPLACE_EXISTING);
                 System.out.println("Arquivo " + chooser.getSelectedFile().getName() + " copiado/colado com sucesso.");
@@ -72,7 +72,7 @@ public class TelaDeAtualizacaoController extends TelaDeAtualizacaoView {
 
             nomeArquivoFoto = fileName;
 
-            lblFoto.setIcon(new ImageIcon(new ImageIcon(localViewImgFolder + "\\" + nomeArquivoFoto).getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT)));
+            lblFoto.setIcon(new ImageIcon(new ImageIcon(InterfaceView.localViewImgFolder + "\\" + nomeArquivoFoto).getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT)));
             btnRemoverFoto.setEnabled(true);
             btnAtualizar.setEnabled(true);
         } catch (Exception e) {
@@ -81,7 +81,7 @@ public class TelaDeAtualizacaoController extends TelaDeAtualizacaoView {
     }
 
     public static void removerFoto() {
-        lblFoto.setIcon(new ImageIcon(new ImageIcon(localViewFolder + "\\imagem-padrao.jpg").getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT)));
+        lblFoto.setIcon(new ImageIcon(new ImageIcon(InterfaceView.localViewFolder + "\\imagem-padrao.jpg").getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT)));
         nomeArquivoFoto = "";
         btnAtualizar.setEnabled(true);
         btnRemoverFoto.setEnabled(false);
