@@ -11,6 +11,16 @@ public class TelaDePesquisaModel {
             TelaDePesquisaController.clausulasDePesquisaComWhere = " where `nome` like '%" + TelaDePesquisaController.registroDePesquisa + "%' or `email` like '%" + TelaDePesquisaController.registroDePesquisa + "%'";
             TelaDePesquisaController.clausulasDePesquisaSemWhere = " and (`nome` like '%" + TelaDePesquisaController.registroDePesquisa + "%' or `email` like '%" + TelaDePesquisaController.registroDePesquisa + "%')";
         }
+
+        try {
+            String strSqlRegistrarHistorico = "insert into `db_senac`.`tbl_historico` (`id_login`, `txt_historico`) values (" + InterfaceView.idLoginAtual + ", '" + pesquisa + "')";
+            Connection conexao = MySQLConnector.conectar();
+            Statement stmSqlRegistrarHistorico = conexao.createStatement();
+            stmSqlRegistrarHistorico.addBatch(strSqlRegistrarHistorico);
+            stmSqlRegistrarHistorico.executeBatch();
+        } catch (Exception e) {
+            System.err.println("Erro: " + e);
+        }
         TelaDePesquisaController.vaParaPrimeiroRegistro();
     }
 

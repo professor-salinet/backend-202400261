@@ -6,6 +6,8 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class InterfaceView {
+    public static String idLoginAtual = "";
+
     public static final String localViewImgFolder = System.getProperty("user.dir") 
         + "\\" 
         + "src" 

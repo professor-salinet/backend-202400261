@@ -19,6 +19,7 @@ public class TelaDeLoginModel {
             if (rstSqlLogin.next()) {
                 InterfaceView.notificarUsuario("Login " + rstSqlLogin.getString("email") + " realizado com sucesso.", TelaDeAtualizacaoController.lblNotificacoes);
                 TelaDeLoginController.abrirTelaDeMenu();
+                InterfaceView.idLoginAtual = rstSqlLogin.getString("id");
             } else {
                 InterfaceView.notificarUsuario("Não foi possível encontrar o login e/ou senha digitados. Por favor, verifique e tente novamente.", TelaDeAtualizacaoController.lblNotificacoes);
             }
