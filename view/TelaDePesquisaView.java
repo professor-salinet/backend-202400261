@@ -10,6 +10,7 @@ public class TelaDePesquisaView extends JFrame {
     public static final JTextField txtPesquisa = new JTextField(20);
     public final JButton btnPesquisar;
     public final JButton btnReiniciarPesquisa;
+    public final JButton btnHistoricoPesquisa;
 
     public final JLabel lblId;
     public static final JTextField txtId = new JTextField(10);
@@ -44,10 +45,13 @@ public class TelaDePesquisaView extends JFrame {
 
         btnPesquisar = new JButton("Pesquisar");
         btnPesquisar.setEnabled(false);
-        InterfaceView.addComponent(btnPesquisar, 3, 0, 2, 1, gbLayout, gbConstraints, this);
+        InterfaceView.addComponent(btnPesquisar, 3, 0, 1, 1, gbLayout, gbConstraints, this);
 
-        btnReiniciarPesquisa = new JButton("Reiniciar Pesquisa");
-        InterfaceView.addComponent(btnReiniciarPesquisa, 3, 2, 2, 1, gbLayout, gbConstraints, this);
+        btnReiniciarPesquisa = new JButton("Reiniciar");
+        InterfaceView.addComponent(btnReiniciarPesquisa, 3, 1, 2, 1, gbLayout, gbConstraints, this);
+
+        btnHistoricoPesquisa = new JButton("Histórico");
+        InterfaceView.addComponent(btnHistoricoPesquisa, 3, 3, 1, 1, gbLayout, gbConstraints, this);
 
         lblId = new JLabel("Id:", SwingConstants.RIGHT);
         InterfaceView.addComponent(lblId, 4, 0, 2, 1, gbLayout, gbConstraints, this);
@@ -160,6 +164,28 @@ public class TelaDePesquisaView extends JFrame {
             }
         );
 
+        btnHistoricoPesquisa.addActionListener(
+            new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    TelaDeHistoricoView.appTelaDeHistoricoView = new TelaDeHistoricoView();
+                    TelaDeHistoricoView.appTelaDeHistoricoView.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+
+                    TelaDeHistoricoView.appTelaDeHistoricoView.addWindowListener(
+                        new WindowAdapter() {
+                            public void windowClosing(WindowEvent e) {
+                                System.out.println("ok");
+                                TelaDePesquisaView.appTelaDePesquisaView.setVisible(true);
+                                TelaDeHistoricoView.appTelaDeHistoricoView.dispose();
+                            }
+                        }
+                    );
+
+                    setVisible(false);
+                }
+            }
+        );
+
         setSize(300,340);
         setVisible(true);
 
@@ -210,8 +236,14 @@ public class TelaDePesquisaView extends JFrame {
 
     public static TelaDePesquisaView appTelaDePesquisaView;
     public static void main(String[] args) {
-        appTelaDePesquisaView = new TelaDePesquisaView();
-        appTelaDePesquisaView.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        // InterfaceView.verificarLarguraEAltura(appTelaDeAtualizacaoView,lblNotificacoes);
+        // InterfaceView.idLoginAtual = "16";
+        if (InterfaceView.idLoginAtual.equals("")) {
+            TelaDeLoginView.appTelaDeLoginView = new TelaDeLoginView();
+            TelaDeLoginView.appTelaDeLoginView.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        } else {
+            appTelaDePesquisaView = new TelaDePesquisaView();
+            appTelaDePesquisaView.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+            // InterfaceView.verificarLarguraEAltura(appTelaDeAtualizacaoView,lblNotificacoes);
+        }
     }
 }

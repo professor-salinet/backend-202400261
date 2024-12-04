@@ -17,11 +17,11 @@ public class TelaDeLoginModel {
             Statement stmSqlLogin = conexao.createStatement();
             ResultSet rstSqlLogin = stmSqlLogin.executeQuery(strSqlLogin);
             if (rstSqlLogin.next()) {
-                InterfaceView.notificarUsuario("Login " + rstSqlLogin.getString("email") + " realizado com sucesso.", TelaDeAtualizacaoController.lblNotificacoes);
+                InterfaceView.notificarUsuario("Login " + rstSqlLogin.getString("email") + " realizado com sucesso.", TelaDeLoginController.lblNotificacoes);
                 TelaDeLoginController.abrirTelaDeMenu();
                 InterfaceView.idLoginAtual = rstSqlLogin.getString("id");
             } else {
-                InterfaceView.notificarUsuario("Não foi possível encontrar o login e/ou senha digitados. Por favor, verifique e tente novamente.", TelaDeAtualizacaoController.lblNotificacoes);
+                InterfaceView.notificarUsuario("Não foi possível encontrar o login e/ou senha digitados. Por favor, verifique e tente novamente.", TelaDeLoginController.lblNotificacoes);
             }
             stmSqlLogin.close();
         } catch (Exception e) {
