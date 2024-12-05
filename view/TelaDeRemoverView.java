@@ -75,6 +75,11 @@ public class TelaDeRemoverView extends JFrame {
                     if (event.getStateChange() == ItemEvent.SELECTED) {
                         TelaDeRemoverController.atualizarCamposController();
                     }
+                    if (event.getItem().equals(InterfaceView.idLoginAtual)) {
+                        btnRemover.setEnabled(false);
+                    } else {
+                        btnRemover.setEnabled(true);
+                    }
                 }
             }
         );
@@ -83,15 +88,17 @@ public class TelaDeRemoverView extends JFrame {
             new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent event) {
-                    TelaDeRemoverController.removerController();
-                    try {
-                        cbxId.setSelectedIndex(cbxId.getSelectedIndex() + 1);
-                        cbxId.removeItemAt(cbxId.getSelectedIndex() - 1);
-                    } catch (Exception e) {
-                        cbxId.setSelectedIndex(cbxId.getSelectedIndex() - 1);
-                        cbxId.removeItemAt(cbxId.getSelectedIndex() + 1);
+                    if (JOptionPane.showConfirmDialog(null, "Tem certeza de que você deseja remover o id: " + String.valueOf(cbxId.getSelectedItem()) + "?") == 0) {
+                        TelaDeRemoverController.removerController();
+                        try {
+                            cbxId.setSelectedIndex(cbxId.getSelectedIndex() + 1);
+                            cbxId.removeItemAt(cbxId.getSelectedIndex() - 1);
+                        } catch (Exception e) {
+                            cbxId.setSelectedIndex(cbxId.getSelectedIndex() - 1);
+                            cbxId.removeItemAt(cbxId.getSelectedIndex() + 1);
+                        }
+                        TelaDeRemoverController.atualizarCamposController();
                     }
-                    TelaDeRemoverController.atualizarCamposController();
                 }
             }
         );
