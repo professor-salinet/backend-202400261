@@ -192,8 +192,14 @@ public class TelaDeAtualizacaoView extends JFrame {
 
     public static TelaDeAtualizacaoView appTelaDeAtualizacaoView;
     public static void main(String[] args) {
-        appTelaDeAtualizacaoView = new TelaDeAtualizacaoView();
-        appTelaDeAtualizacaoView.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        // InterfaceView.verificarLarguraEAltura(appTelaDeAtualizacaoView,lblNotificacoes);
+        // InterfaceView.idLoginAtual = "16";
+        if (InterfaceView.idLoginAtual.equals("")) {
+            TelaDeLoginView.appTelaDeLoginView = new TelaDeLoginView();
+            TelaDeLoginView.appTelaDeLoginView.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        } else {
+            appTelaDeAtualizacaoView = new TelaDeAtualizacaoView();
+            appTelaDeAtualizacaoView.setDefaultCloseOperation(EXIT_ON_CLOSE);
+            // InterfaceView.verificarLarguraEAltura(appTelaDeAtualizacaoView,lblNotificacoes);
+        }
     }
 }

@@ -174,9 +174,7 @@ public class TelaDePesquisaView extends JFrame {
                     TelaDeHistoricoView.appTelaDeHistoricoView.addWindowListener(
                         new WindowAdapter() {
                             public void windowClosing(WindowEvent e) {
-                                System.out.println("ok");
                                 TelaDePesquisaView.appTelaDePesquisaView.setVisible(true);
-                                TelaDeHistoricoView.appTelaDeHistoricoView.dispose();
                             }
                         }
                     );

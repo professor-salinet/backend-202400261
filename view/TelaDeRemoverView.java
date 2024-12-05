@@ -112,8 +112,14 @@ public class TelaDeRemoverView extends JFrame {
 
     public static TelaDeRemoverView appTelaDeRemoverView;
     public static void main(String[] args) {
-        appTelaDeRemoverView = new TelaDeRemoverView();
-        appTelaDeRemoverView.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        // InterfaceView.verificarLarguraEAltura(appTelaDeAtualizacaoView,lblNotificacoes);
+        // InterfaceView.idLoginAtual = "16";
+        if (InterfaceView.idLoginAtual.equals("")) {
+            TelaDeLoginView.appTelaDeLoginView = new TelaDeLoginView();
+            TelaDeLoginView.appTelaDeLoginView.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        } else {
+            appTelaDeRemoverView = new TelaDeRemoverView();
+            appTelaDeRemoverView.setDefaultCloseOperation(EXIT_ON_CLOSE);
+            // InterfaceView.verificarLarguraEAltura(appTelaDeAtualizacaoView,lblNotificacoes);
+        }
     }
 }

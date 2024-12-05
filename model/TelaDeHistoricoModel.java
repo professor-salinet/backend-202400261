@@ -1,6 +1,6 @@
 package model;
 
-import controller.*;
+// import controller.*;
 import view.InterfaceView;
 
 import java.util.*;

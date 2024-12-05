@@ -4,16 +4,13 @@ import controller.*;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.util.*;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
+import javax.swing.event.*;
 
 public class TelaDeHistoricoView extends JFrame {
     public static JList<String> lstHistorico;
     public static JButton btnEnviarHistorico;
-    public static ArrayList<String> strHistoricos;
 
     public static GridBagLayout gbLayout;
     public static GridBagConstraints gbConstraints;
@@ -26,9 +23,9 @@ public class TelaDeHistoricoView extends JFrame {
 
         gbConstraints = new GridBagConstraints();
 
-        String[] strHistoricos = TelaDeHistoricoController.preencherHistorico();
-        lstHistorico = new JList<String>(strHistoricos);
+        lstHistorico = new JList<String>(TelaDeHistoricoController.preencherHistorico());
         lstHistorico.setVisibleRowCount(5);
+        lstHistorico.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         InterfaceView.addComponent(lstHistorico, 0, 0, 1, 1, gbLayout, gbConstraints, this);
 
         btnEnviarHistorico = new JButton("Enviar Histórico");
@@ -40,8 +37,8 @@ public class TelaDeHistoricoView extends JFrame {
                 @Override
                 public void valueChanged(ListSelectionEvent event) {
                     btnEnviarHistorico.setEnabled(true);
-                } 
-            } 
+                }
+            }
         );
 
         btnEnviarHistorico.addActionListener(
@@ -68,12 +65,10 @@ public class TelaDeHistoricoView extends JFrame {
         } else {
             appTelaDeHistoricoView = new TelaDeHistoricoView();
             appTelaDeHistoricoView.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-            // InterfaceView.verificarLarguraEAltura(appTelaDeHistoricoView,lblNotificacoes);
 
             appTelaDeHistoricoView.addWindowListener(
                 new WindowAdapter() {
                     public void windowClosing(WindowEvent e) {
-                        System.out.println("ok");
                         TelaDePesquisaView.appTelaDePesquisaView.setVisible(true);
                         appTelaDeHistoricoView.dispose();
                     }

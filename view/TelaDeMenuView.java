@@ -132,15 +132,21 @@ public class TelaDeMenuView extends JFrame {
 
     public static TelaDeMenuView appTelaDeMenuView;
     public static void main(String[] args) {
-        appTelaDeMenuView = new TelaDeMenuView();
-        appTelaDeMenuView.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        // InterfaceView.idLoginAtual = "16";
+        if (InterfaceView.idLoginAtual.equals("")) {
+            TelaDeLoginView.appTelaDeLoginView = new TelaDeLoginView();
+            TelaDeLoginView.appTelaDeLoginView.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        } else {
+            appTelaDeMenuView = new TelaDeMenuView();
+            appTelaDeMenuView.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        appTelaDeMenuView.addWindowListener(
-            new WindowAdapter() {
-                public void windowClosing(WindowEvent e) {
-                    InterfaceView.removerImagensInuteis();
+            appTelaDeMenuView.addWindowListener(
+                new WindowAdapter() {
+                    public void windowClosing(WindowEvent e) {
+                        InterfaceView.removerImagensInuteis();
+                    }
                 }
-            }
-        );
+            );
+        }
     }
 }
