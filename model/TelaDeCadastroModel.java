@@ -12,9 +12,9 @@ public class TelaDeCadastroModel {
             Statement stmSqlCadastrar = conexao.createStatement();
             stmSqlCadastrar.addBatch(strSqlCadastrar);
             stmSqlCadastrar.executeBatch();
-            InterfaceView.notificarUsuario("Cadastro realizado com sucesso!", TelaDeAtualizacaoController.lblNotificacoes);
+            InterfaceView.notificarUsuario("Cadastro realizado com sucesso!", TelaDeCadastroController.lblNotificacoes);
         } catch (Exception e) {
-            InterfaceView.notificarUsuario("Ops! Ocorrou um problema e não será possível cadastrar nesse momento. Por favor, tente novamente mais tarde.", TelaDeAtualizacaoController.lblNotificacoes);
+            InterfaceView.notificarUsuario("Ops! Ocorrou um problema e não será possível cadastrar nesse momento. Por favor, tente novamente mais tarde.", TelaDeCadastroController.lblNotificacoes);
             System.err.println("Erro: " + e);
         }
     }
