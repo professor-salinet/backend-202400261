@@ -88,6 +88,49 @@ public class TelaDeCadastroView extends JFrame {
                         return;
                     }
 
+                    if (txtEmail.getText().trim().indexOf('@') < 0) {
+                        lblNotificacoes.setText("É necessário digitar um @ no campo Email. Por favor, digite um @ no campo Email para prosseguir.");
+                        txtEmail.requestFocus();
+                        return;
+                    }
+
+                    if (txtEmail.getText().trim().indexOf('.') < 0) {
+                        lblNotificacoes.setText("É necessário digitar um . no campo Email. Por favor, digite um . no campo Email para prosseguir.");
+                        txtEmail.requestFocus();
+                        return;
+                    }
+
+                    if (txtEmail.getText().trim().length() < 10) {
+                        lblNotificacoes.setText("É necessário digitar no mínimo dez caracteres no campo Email. Por favor, digite no mínimo dez caracteres no campo Email para prosseguir.");
+                        txtEmail.requestFocus();
+                        return;
+                    }
+
+                    int antesDoArroba = txtEmail.getText().trim().lastIndexOf('@');
+                    String strAntesDoArroba = txtEmail.getText().trim().substring(0, antesDoArroba);
+
+                    if (strAntesDoArroba.length() < 3) {
+                        lblNotificacoes.setText("É necessário digitar no mínimo três caracteres antes do @ no campo Email. Por favor, digite no mínimo três caracteres antes do @ no campo Email para prosseguir.");
+                        txtEmail.requestFocus();
+                        return;
+                    }
+
+                    int antesDoPonto = txtEmail.getText().trim().lastIndexOf('.');
+
+                    if ((antesDoPonto - antesDoArroba) < 4) {
+                        lblNotificacoes.setText("É necessário digitar no mínimo três caracteres depois do @ e antes do . no campo Email. Por favor, digite no mínimo três caracteres depois do @ e antes do . no campo Email para prosseguir.");
+                        txtEmail.requestFocus();
+                        return;
+                    }
+
+                    String strDepoisDoPonto = txtEmail.getText().trim().substring(antesDoPonto + 1);
+
+                    if (strDepoisDoPonto.length() < 2) {
+                        lblNotificacoes.setText("É necessário digitar no mínimo dois caracteres depois do . no campo Email. Por favor, digite no mínimo dois caracteres depois do . no campo Email para prosseguir.");
+                        txtEmail.requestFocus();
+                        return;
+                    }
+
                     if (String.valueOf(txtSenha.getPassword()).trim().length() == 0) {
                         lblNotificacoes.setText("É necessário digitar alguma coisa no campo Senha. Por favor, digite um caracter válido no campo Senha para prosseguir.");
                         txtSenha.requestFocus();
