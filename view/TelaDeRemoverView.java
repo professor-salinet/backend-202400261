@@ -113,6 +113,7 @@ public class TelaDeRemoverView extends JFrame {
             }
         );
 
+        InterfaceView.definirIcone(this);
         setSize(300,300);
         setVisible(true);
     }

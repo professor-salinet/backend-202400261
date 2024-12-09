@@ -3,9 +3,13 @@ import controller.*;
 
 import java.awt.*;
 import java.awt.event.*;
+
+import java.awt.image.*;
+import java.io.*;
+import javax.imageio.*;
 import javax.swing.*;
 
-public class InterfaceView {
+public class InterfaceView extends JFrame {
     public static final int IMG_WIDTH = 100;
     public static final int IMG_HEIGHT = 100;
 
@@ -63,5 +67,15 @@ public class InterfaceView {
 
     public static void removerImagensInuteis() {
         InterfaceController.verificarApagarImagensInuteis();
+    }
+
+public static void definirIcone(JFrame frame) {
+        try {
+            InputStream imageInputStream = frame.getClass().getResourceAsStream("senac-logo.png");
+            BufferedImage bufferedImage = ImageIO.read(imageInputStream);
+            frame.setIconImage(bufferedImage);
+        } catch (Exception e) {
+            System.err.println("Erro: " + e);
+        }
     }
 }

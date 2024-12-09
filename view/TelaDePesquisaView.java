@@ -184,6 +184,7 @@ public class TelaDePesquisaView extends JFrame {
             }
         );
 
+        InterfaceView.definirIcone(this);
         setSize(300,340);
         setVisible(true);
 

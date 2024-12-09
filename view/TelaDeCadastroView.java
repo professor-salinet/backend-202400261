@@ -170,6 +170,7 @@ public class TelaDeCadastroView extends JFrame {
             }
         );
 
+        InterfaceView.definirIcone(this);
         setSize(280,280);
         setVisible(true);
     }

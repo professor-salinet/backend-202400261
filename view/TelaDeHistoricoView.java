@@ -52,6 +52,7 @@ public class TelaDeHistoricoView extends JFrame {
             }
         );
 
+        InterfaceView.definirIcone(this);
         setSize(200, 200);
         setVisible(true);
     }
