@@ -188,6 +188,7 @@ public class TelaDeAtualizacaoView extends JFrame {
 
         InterfaceView.definirIcone(this);
         setSize(350,350);
+        InterfaceView.setFrameCenterPosition(this);
         setVisible(true);
     }
 

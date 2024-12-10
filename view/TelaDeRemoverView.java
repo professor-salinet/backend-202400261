@@ -115,6 +115,7 @@ public class TelaDeRemoverView extends JFrame {
 
         InterfaceView.definirIcone(this);
         setSize(300,300);
+        InterfaceView.setFrameCenterPosition(this);
         setVisible(true);
     }
 
@@ -124,9 +125,11 @@ public class TelaDeRemoverView extends JFrame {
         if (InterfaceView.idLoginAtual.equals("")) {
             TelaDeLoginView.appTelaDeLoginView = new TelaDeLoginView();
             TelaDeLoginView.appTelaDeLoginView.setDefaultCloseOperation(EXIT_ON_CLOSE);
+            // InterfaceView.definirIcone(TelaDeLoginView.appTelaDeLoginView);
         } else {
             appTelaDeRemoverView = new TelaDeRemoverView();
             appTelaDeRemoverView.setDefaultCloseOperation(EXIT_ON_CLOSE);
+            // InterfaceView.definirIcone(appTelaDeRemoverView);
             // InterfaceView.verificarLarguraEAltura(appTelaDeAtualizacaoView,lblNotificacoes);
         }
     }

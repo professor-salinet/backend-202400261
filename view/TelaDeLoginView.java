@@ -59,7 +59,8 @@ public class TelaDeLoginView extends JFrame {
         );
 
         InterfaceView.definirIcone(this);
-        setSize(170,140);
+        setSize(300,300);
+        InterfaceView.setFrameCenterPosition(this);
         setVisible(true);
     }
 

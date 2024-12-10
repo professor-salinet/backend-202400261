@@ -172,6 +172,7 @@ public class TelaDeCadastroView extends JFrame {
 
         InterfaceView.definirIcone(this);
         setSize(280,280);
+        InterfaceView.setFrameCenterPosition(this);
         setVisible(true);
     }
 

@@ -186,6 +186,7 @@ public class TelaDePesquisaView extends JFrame {
 
         InterfaceView.definirIcone(this);
         setSize(300,340);
+        InterfaceView.setFrameCenterPosition(this);
         setVisible(true);
 
         TelaDePesquisaController.inicializacaoDeRegistros();
